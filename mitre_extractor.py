@@ -8,7 +8,7 @@ import sys
 
 
 def extract_technique_text_file(file):
-    id_pattern = r'T\d{4}'
+    id_pattern = r'(T\d{4}\.\d{3}|T\d{4})'
     found_ids = []
     with open(file, 'r', encoding='utf-8') as f:
         content = f.read()
@@ -18,7 +18,7 @@ def extract_technique_text_file(file):
     return found_ids
 
 def extract_techniques_url(url):
-    id_pattern = r'T\d{4}'
+    id_pattern = r'(T\d{4}\.\d{3}|T\d{4})'
     found_ids = []
     response = requests.get(url)
     if response.status_code == 200:
@@ -30,8 +30,7 @@ def extract_techniques_url(url):
     return found_ids
 
 def extract_techniques_pdf(file):
-    print(file)
-    id_pattern = r'T\d{4}'
+    id_pattern = r'(T\d{4}\.\d{3}|T\d{4})'
     found_ids = []
     pdf_doc = fitz.open(file)
     for page in pdf_doc:
@@ -67,10 +66,11 @@ if __name__ == "__main__":
         total_sum = 0
         total_techniques = len(sorted_counts)
         
+        
         for key,value in sorted_counts.items():
-            print(f"Technique ID: {key} Incidence: {value}")
+            print(f"Technique ID: {key.ljust(10)} Incidence: {str(value).ljust(4)}")
             total_sum = total_sum + value
 
-        print(f"Unique Number of MITRE ATTCK Techniques found: {total_techniques}.\nTotal MITRE ATTCK Techniques found: {total_sum}")
+        print(f"Unique Number of MITRE ATTCK Techniques found: {total_techniques}.\nTotal Instances of MITRE ATTCK Techniques found: {total_sum}")
     except IndexError as e:
         print(f"Error: {e}. This likely means that no results were found.")
