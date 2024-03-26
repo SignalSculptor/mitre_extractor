@@ -39,7 +39,7 @@ def extract_techniques_pdf(file:str, pattern:str) -> list:
 
 def resolution_pattern(resolution:str) -> str:
     if resolution == "st":
-        return r'(T\d{4}\.\d{3}|T\d{4})'
+        return r'(T\d{4}\.\d{3})'
     else:
         return r'T\d{4}'
     
